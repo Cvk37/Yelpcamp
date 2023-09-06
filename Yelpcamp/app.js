@@ -50,18 +50,22 @@ mongoose.connect('mongodb://127.0.0.1:27017/Yelp')
 app.use(session(sessionConfig))
 app.use(flash());
 
+
 app.use(passport.initialize())
 app.use(passport.session())
 passport.use(new LocalStrategy(User.authenticate()))
 passport.serializeUser(User.serializeUser())
-
+passport.deserializeUser(User.deserializeUser())
 
 app.use((req,res,next)=>{
+    res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.del = req.flash('del');
-    res.locals.err = req.flash('err')
+    res.locals.error = req.flash('error')
     next();
  })
+
+
 
 
 app.get('/fakeUser',async(req,res)=>{
