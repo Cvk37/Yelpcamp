@@ -5,7 +5,8 @@ const Campground = require('../models/campground');
 const {campgroundSchema}=require('../schemas');
 const ObjectID = require('mongoose').Types.ObjectId;
 const ExpressError = require('../errors/ExpressError');
-const {isLoggedIn} = require('../isLoggedIn')
+const {isLoggedIn} = require('../isLoggedIn');
+const campground = require('../models/campground');
 
 
 
@@ -31,6 +32,7 @@ router.get('/new',isLoggedIn,(req,res)=>{
 router.post('/',isLoggedIn,validateCampground, catchAsync(async (req,res,next)=>{
    
     const campground = new Campground(req.body.campground);
+    campground.author = req.user._id;
     await campground.save();
     req.flash('success','Sucessfully saved Campground')
     res.redirect(`/campgrounds/${campground._id}`)
@@ -39,7 +41,8 @@ router.post('/',isLoggedIn,validateCampground, catchAsync(async (req,res,next)=>
 
 router.get('/:id',isLoggedIn ,catchAsync (async(req,res,next)=>{
    
-    const campground = await Campground.findById(req.params.id).populate('reviews');
+    const campground = await Campground.findById(req.params.id).populate('reviews').populate('author');
+    console.log(campground)
     if(!campground){
         req.flash('error','Cannot find the Campground')
         return res.redirect('/campgrounds')
@@ -51,10 +54,14 @@ router.get('/:id/edit',isLoggedIn, catchAsync( async(req,res)=>{
      res.render('campgrounds/edit',{campground})
 }))
 router.put('/:id',isLoggedIn, validateCampground, catchAsync ( async(req,res)=>{
-   const {id}=req.params;
-    const campground = await Campground.findByIdAndUpdate(id,{...req.body.campground})
+    const {id}=req.params;
+    const campground = await Campground.findById(id);
+    if (!(campground.author.equals(req.user._id))){
+        req.flash('You do not have permission to do that')
+    }
+    //const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground})
     req.flash('success','Sucessfully updated Campground')
-    res.redirect(`/campgrounds/${campground._id}`)
+    res.redirect(`/campgrounds/${camp._id}`)
 }))
 router.delete('/:id',isLoggedIn, catchAsync (async (req,res)=>{
     const {id}=req.params;
