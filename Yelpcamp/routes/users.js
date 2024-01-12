@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User');
 const passport = require('passport')
 const { storeReturnTo } = require('../isLoggedIn');
 const users = require('../controllers/users')
