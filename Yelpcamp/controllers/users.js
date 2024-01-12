@@ -1,14 +1,10 @@
-const express = require('express');
-const router = express.Router();
 const User = require('../models/User');
-const passport = require('passport')
-const { storeReturnTo } = require('../isLoggedIn');
 
-router.get('/register',(req,res)=>{
+module.exports.renderRegisterForm = (req,res)=>{
     res.render('users/register')
-})
+}
 
-router.post('/register',async (req,res)=>{
+module.exports.createUser = async (req,res)=>{
     try{
     const{email,username,password}= req.body
     const user = new User({email,username})
@@ -23,20 +19,19 @@ router.post('/register',async (req,res)=>{
         req.flash('error',err.message);
         res.redirect('register')
     }
-})
+}
 
-router.get('/login',async (req,res)=>{
-  res.render('users/login')
-})
+module.exports.renderLoginForm = async (req,res)=>{
+    res.render('users/login')
+  }
 
-router.post('/login', storeReturnTo,
-  passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }),
-  (req, res) => {
+module.exports.loginUser = (req, res) => {
     req.flash('success', 'Welcome back!');
     const redirectUrl = res.locals.returnTo || '/campgrounds';
     res.redirect(redirectUrl);
-  });
-router.get('/logout', (req, res, next) => {
+  }
+
+module.exports.logoutUser = (req, res, next) => {
     req.logout(function (err) {
         if (err) {
             return next(err);
@@ -44,5 +39,4 @@ router.get('/logout', (req, res, next) => {
         req.flash('success', 'Goodbye!');
         res.redirect('/campgrounds');
     });
-}); 
-module.exports = router;
+}

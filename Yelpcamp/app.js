@@ -13,7 +13,7 @@ const User = require('./models/User')
 
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews')
-const userRoutes = require('./routes/user')
+const userRoutes = require('./routes/users')
 
 app.engine('ejs',ejsMate)
 app.set('view engine','ejs')
