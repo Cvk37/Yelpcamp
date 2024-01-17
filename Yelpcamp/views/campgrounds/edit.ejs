@@ -12,10 +12,13 @@
                     <label class="form-label" for="location">Location</label>
                     <input class="form-control" type="text" id="location" name="campground[location]" value="<%=campground.location %>" required >
                 </div>
-                <div class="mb-3">
-                    <label class="form-label" for="image">Add Images</label>
-                    <input type="file" name="image" id="image" multiple>
-                </div>
+                  
+        <div class="form-file custom-file">
+            <label class="form-label" for="image">Add Images</label>
+            <input type="file" class="form-control custom-file-input" id="image" name="image" multiple>
+            <label class="custom-file-label" for="image">
+        </div>
+          
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
                     <textarea class="form-control" type="text" id="description" name="campground[description]" required><%= campground.description %></textarea>
@@ -26,6 +29,15 @@
                     <span class="input-group-text" id="price-label">$</span>
                     <input type="text" class="form-control" id="price" aria-label="price" placeholder="0.0" aria-describedby="price-label" name="campground[price]" value="<%= campground.price %>" required>
                   </div>
+                </div>
+                <div class="mb-3">
+                    <% campground.images.forEach( (img,i) => { %>
+                        <img src="<%=img.thumbnail%>" class="img-thumbnail" srcset="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" id="image-<%=i%>" name="deleteImages[]" value="<%= img.filename %>">
+                        </div>
+                        <label for="">Delete</label>
+                        <% }) %>
                 </div>
                 <button class="btn btn-warning mb-3">Edit Campground</button>
             </form>
