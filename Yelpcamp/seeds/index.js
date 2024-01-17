@@ -20,17 +20,18 @@ const seedDB = async()=>{
     author:'6539903aeca77882b9409ff7',
     location:`${randcity.city},${randcity.state}`,
     title:`${sample(descriptors)}  ${sample(places)}`,
-    images: [
+      images: [
         {
-          url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705122652/Yelpcamp/me2axbdlkq3al0bjwyeo.jpg',
-          filename: 'Yelpcamp/me2axbdlkq3al0bjwyeo',
+          url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705353891/Yelpcamp/dgbiqn1pzedxangynwo6.jpg',
+          filename: 'Yelpcamp/dgbiqn1pzedxangynwo6',
           
         },
         {
-          url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705122654/Yelpcamp/nmqyo8uxe9ijgxcjlnkg.jpg',
-          filename: 'Yelpcamp/nmqyo8uxe9ijgxcjlnkg',
+          url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705421971/Yelpcamp/shou2yubszye1mgcgcfs.jpg',
+          filename: 'Yelpcamp/shou2yubszye1mgcgcfs',
           
         }
+    
       ],
     description:'egestas quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim enim sit amet venenatis urna cursus eget nunc scelerisque viverra mauris in aliquam sem fringilla ut',
     price : price
