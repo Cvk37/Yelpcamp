@@ -13,26 +13,34 @@ mongoose.connect('mongodb://127.0.0.1:27017/Yelp')
 const sample = array =>  array[Math.floor(Math.random()*array.length)]
 const seedDB = async()=>{
    await Campground.deleteMany({});
-   for(let i=0;i<50;i++){
+   for(let i=0;i<200;i++){
    const randcity = sample(cities);
    const price = Math.ceil(Math.random()*30);
    const camps = new Campground({
     author:'6539903aeca77882b9409ff7',
     location:`${randcity.city},${randcity.state}`,
-    title:`${sample(descriptors)}  ${sample(places)}`,
+    title:`${sample(descriptors)}  ${sample(places)}`, 
+    geometry: {
+                type: "Point",
+                coordinates: [
+                 randcity.longitude,
+                 randcity.latitude
+                ]
+            }, 
+
       images: [
-        {
-          url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705353891/Yelpcamp/dgbiqn1pzedxangynwo6.jpg',
-          filename: 'Yelpcamp/dgbiqn1pzedxangynwo6',
-          
-        },
-        {
-          url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705421971/Yelpcamp/shou2yubszye1mgcgcfs.jpg',
-          filename: 'Yelpcamp/shou2yubszye1mgcgcfs',
-          
-        }
-    
-      ],
+    {
+      url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705549568/Yelpcamp/ebqy6wgjcitp1xecw4c0.jpg',
+      filename: 'Yelpcamp/ebqy6wgjcitp1xecw4c0'
+      
+    },
+    {
+      url: 'https://res.cloudinary.com/douq9trcw/image/upload/v1705549569/Yelpcamp/ya9dj92oweivz54wyuag.jpg',
+      filename: 'Yelpcamp/ya9dj92oweivz54wyuag'
+     
+    }
+  ],
+
     description:'egestas quis ipsum suspendisse ultrices gravida dictum fusce ut placerat orci nulla pellentesque dignissim enim sit amet venenatis urna cursus eget nunc scelerisque viverra mauris in aliquam sem fringilla ut',
     price : price
 })
